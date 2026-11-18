@@ -568,3 +568,14 @@ sup .bx, sub .bx { border-width: 1px; }
 [data-style="glass"] .screen { min-height: 130px; }
 .pad { min-height: 0; }
 [data-style] .key .frac .bx { width: .5em; height: .5em; }
+
+/* Beschriftung bleibt immer mittig, egal was sonst in der Taste steckt */
+.key > span { grid-area: 1 / 1; }
+.key > .wave { grid-area: 1 / 1; }
+/* Lichtwelle beim Antippen: schwebt über der Taste, nimmt keinen Platz ein */
+.wave {
+  position: absolute; border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(circle, rgba(255,255,255,.3), rgba(255,255,255,0) 60%);
+  transform: scale(0); animation: wave .6s ease-out forwards;
+}
+@keyframes wave { to { transform: scale(1); opacity: 0; } }

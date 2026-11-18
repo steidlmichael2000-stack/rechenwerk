@@ -626,7 +626,8 @@
     const d = Math.max(r.width, r.height) * 2.2;
     Object.assign(w.style, { width: d + 'px', height: d + 'px', left: x - d / 2 + 'px', top: y - d / 2 + 'px' });
     el.appendChild(w);
-    w.addEventListener('animationend', () => w.remove());
+    // fest nach Zeit entfernen: in Looks, die die Welle ausblenden, gibt es kein animationend
+    setTimeout(() => w.remove(), 700);
   }
   function releaseFx(el) {
     if (!el.classList.contains('pressed')) return;
@@ -786,6 +787,7 @@
   }
 
   function applyTheme() {
+    document.querySelectorAll('.wave').forEach((w) => w.remove());
     document.documentElement.dataset.theme = S.theme;
     document.documentElement.dataset.motion = S.motion;
     document.documentElement.dataset.style = S.theme.startsWith('glas') ? 'glass' : S.theme.startsWith('modern') ? 'modern' : 'klassik';
