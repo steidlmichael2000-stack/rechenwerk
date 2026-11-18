@@ -17,6 +17,7 @@ OUT=android-build/android/app/build/outputs/apk/release
 DRIVE="$HOME/Google Drive/Rechenwerk"
 
 cp index.html app.js calc.js style.css sw.js manifest.webmanifest icon.svg icon-*.png android-build/www/
+sed -i "s/const APP_VERSION = 'Web'/const APP_VERSION = 'APK $(date +%d.%m.%Y\ %H:%M)'/" android-build/www/app.js
 python3 -I make-icons.py android-build/android/app/src/main/res
 cp android-overrides/MainActivity.java "$(find android-build/android/app/src/main/java -name MainActivity.java)"
 (cd android-build && npx cap sync android >/dev/null)

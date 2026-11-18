@@ -5,6 +5,7 @@
 (function () {
   'use strict';
   const $ = (id) => document.getElementById(id);
+  const APP_VERSION = 'Web'; // wird beim APK-Bau durch Datum/Uhrzeit ersetzt
 
   // ---------- Anzeige der internen Tokens ----------
   const DISP = {
@@ -727,7 +728,8 @@
       <label class="row"><input type="checkbox" id="optComma" ${S.comma ? 'checked' : ''}> Komma als Dezimaltrennzeichen</label>
       <h3>Speicher</h3>
       <div class="seg"><button id="optReset" class="danger">Alles zurücksetzen</button></div>
-      <p class="hint">Rechenwerk läuft komplett offline. Keine Werbung, keine Konten, keine Daten verlassen das Gerät.</p>`);
+      <p class="hint">Rechenwerk läuft komplett offline. Keine Werbung, keine Konten, keine Daten verlassen das Gerät.</p>
+      <p class="hint">Version: ${APP_VERSION}</p>`);
     const body = $('sheetBody');
     body.querySelectorAll('[data-ang]').forEach((b) => b.addEventListener('click', () => {
       S.angle = b.dataset.ang; save(); draw(); openMenu();
