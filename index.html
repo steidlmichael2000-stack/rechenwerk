@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Rechenwerk</title>
+  <meta name="description" content="Wissenschaftlicher Taschenrechner mit Formelanzeige – offline, ohne Werbung.">
+  <meta name="theme-color" content="#07080b">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="orbs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <main class="calc" id="calc">
+
+    <section class="screen" id="screen" aria-live="polite">
+      <div class="ind" id="ind"></div>
+      <div class="line-in" id="lineIn"></div>
+      <div class="line-out" id="lineOut"></div>
+    </section>
+
+    <div class="tray">
+      <section class="pad pad-fn" id="padFn"></section>
+      <section class="pad pad-num" id="padNum"></section>
+    </div>
+  </main>
+
+  <div class="sheet-back" id="sheetBack" hidden></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" hidden>
+    <div class="sheet-head"><h2 id="sheetTitle"></h2><button class="sheet-x" id="sheetClose" aria-label="Schließen">✕</button></div>
+    <div class="sheet-body" id="sheetBody"></div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
