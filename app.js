@@ -54,7 +54,10 @@
   const strip = (n) => (n && n.k === 'paren' ? n.a : n);
   const BOX = '<span class="box"></span>';
   const frac = (a, b) => `<span class="frac"><span class="fn">${a}</span><span class="fd">${b}</span></span>`;
-  const root = (idx, body) => `<span class="rt">${idx ? `<sup class="ri">${idx}</sup>` : ''}<span class="rs">√</span><span class="rb">${body}</span></span>`;
+  // Wurzel: Haken als SVG, das mit dem Inhalt mitwächst und oben nahtlos in den Strich übergeht
+  const RAD = '<svg class="rs" viewBox="0 0 10 24" preserveAspectRatio="none" aria-hidden="true">'
+    + '<path d="M0.5 14.5 L3 13 L6 23.2 L9.6 0.6 L10 0.6" vector-effect="non-scaling-stroke"/></svg>';
+  const root = (idx, body) => `<span class="rt${idx ? ' has-i' : ''}">${idx ? `<span class="ri">${idx}</span>` : ''}${RAD}<span class="rb">${body}</span></span>`;
   const sup = (x) => `<sup>${x}</sup>`;
   const op = (x) => `<span class="op">${x}</span>`;
   const FN = {

@@ -1,5 +1,5 @@
 // Rechenwerk – Offline-Cache. Bei Änderungen VERSION hochzählen.
-const VERSION = 'rechenwerk-v19';
+const VERSION = 'rechenwerk-v20';
 const FILES = ['./', 'index.html', 'style.css', 'calc.js', 'app.js', 'manifest.webmanifest',
   'icon.svg', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 
