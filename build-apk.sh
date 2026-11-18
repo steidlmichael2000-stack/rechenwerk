@@ -11,7 +11,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 # Googles Server liefert hier über IPv4 404 – Java deshalb auf IPv6
 export JAVA_TOOL_OPTIONS="-Djava.net.preferIPv6Addresses=true"
 
-VERSION_CODE=${1:-$(date +%y%m%d%H)}   # muss bei jedem Update steigen
+VERSION_CODE=${1:-$(( $(date +%s) / 60 ))}   # Minuten seit 1970: steigt bei jedem Build
 BT=$ANDROID_HOME/build-tools/34.0.0
 OUT=android-build/android/app/build/outputs/apk/release
 DRIVE="$HOME/Google Drive/Rechenwerk"
