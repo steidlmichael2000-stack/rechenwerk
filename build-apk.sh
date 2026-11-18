@@ -18,6 +18,7 @@ DRIVE="$HOME/Google Drive/Rechenwerk"
 
 cp index.html app.js calc.js style.css sw.js manifest.webmanifest icon.svg icon-*.png android-build/www/
 python3 -I make-icons.py android-build/android/app/src/main/res
+cp android-overrides/MainActivity.java "$(find android-build/android/app/src/main/java -name MainActivity.java)"
 (cd android-build && npx cap sync android >/dev/null)
 sed -i "s/versionCode [0-9]*/versionCode $VERSION_CODE/" android-build/android/app/build.gradle
 (cd android-build/android && ./gradlew --no-daemon -q assembleRelease)
