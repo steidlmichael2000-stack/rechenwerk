@@ -551,3 +551,18 @@ sup .bx, sub .bx { border-width: 1px; }
 [data-style] .key.num[aria-label="Ans"] { font-size: min(24px, 6vw); }
 .lbl { overflow: visible; }
 .key { padding: 0; }
+
+/* Tastenhöhe folgt der Breite (wie beim echten Rechner); überschüssige Höhe bekommt das Display.
+   Auf kurzen Bildschirmen dürfen die Reihen schrumpfen (minmax(0, …)). */
+:root {
+  --cw: min(100vw, 460px);
+  --row-fn: calc((var(--cw) - 64px) / 6 * .62 + 14px);
+  --row-num: calc((var(--cw) - 64px) / 5 * .74 + 16px);
+}
+[data-style] .screen { flex: 1 1 auto; height: auto; min-height: 110px; }
+[data-style] .pad-fn { flex: 0 1 auto; grid-auto-rows: minmax(0, var(--row-fn)); }
+[data-style] .pad-num { flex: 0 1 auto; grid-auto-rows: minmax(0, var(--row-num)); }
+[data-style="glass"] .tray { flex: 0 1 auto; }
+[data-style="glass"] .screen { min-height: 130px; }
+.pad { min-height: 0; }
+[data-style] .key .frac .bx { width: .5em; height: .5em; }
