@@ -28,14 +28,14 @@
     angle: 'D', fmt: 'exact', engK: null,
     result: null, err: null,
     hist: [], histIdx: -1,
-    theme: 'glas', vib: true, comma: true,
+    theme: 'glas', vib: true, comma: true, motion: 'dezent',
   };
 
   const STORE = 'rechenwerk.v1';
   function load() {
     try {
       const d = JSON.parse(localStorage.getItem(STORE) || '{}');
-      for (const k of ['ans', 'preAns', 'angle', 'theme', 'vib', 'comma']) if (d[k] !== undefined) S[k] = d[k];
+      for (const k of ['ans', 'preAns', 'angle', 'theme', 'vib', 'comma', 'motion']) if (d[k] !== undefined) S[k] = d[k];
       if (d.vars) Object.assign(S.vars, d.vars);
       if (Array.isArray(d.hist)) S.hist = d.hist.slice(-60);
     } catch (e) { /* privater Modus o. Ä. */ }
@@ -43,7 +43,7 @@
   function save() {
     try {
       localStorage.setItem(STORE, JSON.stringify({
-        ans: S.ans, preAns: S.preAns, vars: S.vars, angle: S.angle, theme: S.theme, vib: S.vib, comma: S.comma, hist: S.hist,
+        ans: S.ans, preAns: S.preAns, vars: S.vars, angle: S.angle, theme: S.theme, vib: S.vib, comma: S.comma, motion: S.motion, hist: S.hist,
       }));
     } catch (e) { /* egal */ }
   }
@@ -608,7 +608,7 @@
 
   // ---------- Animationen ----------
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const animated = () => !reduceMotion.matches && document.documentElement.dataset.style !== 'klassik';
+  const animated = () => !reduceMotion.matches && S.motion !== 'aus' && document.documentElement.dataset.style !== 'klassik';
 
   // Licht unter dem Finger + Welle beim Antippen, federndes Zurückschnellen beim Loslassen
   function pressFx(el, e) {
@@ -715,6 +715,9 @@
         <button data-theme="${id}" class="${S.theme === id ? 'on' : ''}">
           <span class="sw" style="background:${body}"><i style="background:${scr}"></i></span>${l}</button>`).join('')}
       </div>
+      <h3>Animationen</h3>
+      <div class="seg">${[['lebendig', 'Lebendig'], ['dezent', 'Dezent'], ['aus', 'Aus (Akku sparen)']].map(([v, l]) => `<button data-mot="${v}" class="${S.motion === v ? 'on' : ''}">${l}</button>`).join('')}</div>
+      <p class="hint">Lebendig: Hintergrund bewegt sich langsam. Dezent: Hintergrund steht, Tasten federn. Aus: keine Animationen.</p>
       <h3>Bedienung</h3>
       <label class="row"><input type="checkbox" id="optVib" ${S.vib ? 'checked' : ''}> Vibration beim Tastendruck</label>
       <label class="row"><input type="checkbox" id="optComma" ${S.comma ? 'checked' : ''}> Komma als Dezimaltrennzeichen</label>
@@ -724,6 +727,9 @@
     const body = $('sheetBody');
     body.querySelectorAll('[data-ang]').forEach((b) => b.addEventListener('click', () => {
       S.angle = b.dataset.ang; save(); draw(); openMenu();
+    }));
+    body.querySelectorAll('[data-mot]').forEach((b) => b.addEventListener('click', () => {
+      S.motion = b.dataset.mot; applyTheme(); save(); openMenu();
     }));
     body.querySelectorAll('[data-theme]').forEach((b) => b.addEventListener('click', () => {
       S.theme = b.dataset.theme; applyTheme(); save(); openMenu();
@@ -778,6 +784,7 @@
 
   function applyTheme() {
     document.documentElement.dataset.theme = S.theme;
+    document.documentElement.dataset.motion = S.motion;
     document.documentElement.dataset.style = S.theme.startsWith('glas') ? 'glass' : S.theme.startsWith('modern') ? 'modern' : 'klassik';
     const t = THEMES.find((x) => x[0] === S.theme) || THEMES[0];
     document.querySelector('meta[name="theme-color"]').setAttribute('content', t[2]);
